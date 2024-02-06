@@ -5,6 +5,7 @@ import {
   faAngleLeft,
   faAngleRight,
   faPause,
+  faRedo,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Player = ({
@@ -17,6 +18,8 @@ const Player = ({
   songs,
   setCurrentSong,
   setSongs,
+  isRepeat,
+  toggleRepeat,
 }) => {
   //Use effect
   useEffect(() => {
@@ -36,6 +39,7 @@ const Player = ({
     setSongs(newSongs);
   }, [currentSong]);
   //Event Handlers
+
   const playSongHandler = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -110,6 +114,12 @@ const Player = ({
           className="skip-forward"
           onClick={() => skipTrackHandler("skip-forward")}
           icon={faAngleRight}
+          size="2x"
+        />
+        <FontAwesomeIcon
+          onClick={toggleRepeat}
+          icon={faRedo}
+          className={isRepeat ? "active" : ""}
           size="2x"
         />
       </div>

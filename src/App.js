@@ -15,6 +15,7 @@ function App() {
   //States
   const [libraryStatus, setLibraryStatus] = useState(false);
   const [songs, setSongs] = useState(data());
+  const [isRepeat, setIsRepeat] = useState(false);
   const [currentSong, setCurrentSong] = useState(songs[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [songInfo, setSongInfo] = useState({
@@ -37,11 +38,21 @@ function App() {
     });
   };
 
+  const toggleRepeat = () => {
+    setIsRepeat(!isRepeat);
+  };
+
   const songEndHandler = async () => {
+    if (isRepeat) return;
     const currentIndex = songs.findIndex((item) => item.id === currentSong.id);
     const nextIndex = (currentIndex + 1) % songs.length;
     await setCurrentSong(songs[nextIndex]);
   };
+
+  useEffect(() => {
+    // Update the audio loop property when isRepeat changes
+    audioRef.current.loop = isRepeat;
+  }, [isRepeat]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -63,6 +74,8 @@ function App() {
         songs={songs}
         setCurrentSong={setCurrentSong}
         setSongs={setSongs}
+        isRepeat={isRepeat}
+        toggleRepeat={toggleRepeat}
       />
       <Library
         songs={songs}

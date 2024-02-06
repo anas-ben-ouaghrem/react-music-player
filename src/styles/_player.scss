@@ -30,6 +30,10 @@
   svg {
     cursor: pointer;
   }
+
+  .active {
+    color: #1db954; /* Adjust the color for the active state */
+  }
 }
 
 input[type="range"]:focus {
